@@ -1,25 +1,35 @@
 import json
 
-values_path = "C:\\Users\\legen\\OneDrive\\Dokumente\\Privat\\Games\\Keks-Clicker\\data.json"
+values_path = __file__.rsplit("\\", maxsplit=1)[0] + "\\data.json"
 
 
-class class_values:
-    @staticmethod
-    def read():
-        # read values from txt file
-        with open(values_path, "r") as file:
-            temp = json.load(file)
+def read():
+    """Reads the values from the json file
 
-        for key in temp:
-            temp = []
-            temp.append(temp[key])
+    Returns:
+        list: list with values
+    """
+    with open(values_path, "r") as file:
+        temp = json.load(file)
 
-        kekse = int(temp[0])
-        mult_upgrades = int(temp[1])
-        mult_kekse = int(temp[2])
+    kekse = int(temp["kekse"])
+    mult_upgrades = int(temp["upgrades"])
+    mult_kekse = int(temp["multiplicator"])
 
-    @staticmethod
-    def save(kekse, mult_upgrades, mult_kekse):
-        # save variable values
-        with open(values_path, 'w') as f:
-            pass
+    templist = [kekse, mult_upgrades, mult_kekse]
+    return templist
+
+
+def save_values(templist):
+    """Saves the values in the json file
+
+    Args:
+        templist(list): list with variable values used in main.py
+    """
+    tempdict = {
+        "kekse": templist[0],
+        "upgrades": templist[1],
+        "multiplicator": templist[2]
+    }
+    with open(values_path, 'w') as f:
+        json.dump(tempdict, f)
