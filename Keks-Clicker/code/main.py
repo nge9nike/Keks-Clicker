@@ -1,5 +1,5 @@
-from turtle import update
 from values import read, save_values
+from archivement import archivements
 from function_gui import more_cookies, upgrade
 from tkinter import ttk, Tk, N, W, E, S, PhotoImage, StringVar
 
@@ -23,6 +23,7 @@ class Main:
         self.upgrades = StringVar(value=str(temp[1]))
         self.multiplicator = StringVar(value=str(temp[2]))
         self.info = StringVar(value="Nichts")
+        self.archivement_text = StringVar(value="Nicht neues")
 
     def _init_window(self):
         """the mainframe,
@@ -47,17 +48,22 @@ class Main:
         infobox = ttk.Label(mainframe, width=20, textvariable=self.info)
         infobox.grid(column=1, row=3, sticky=(W, S))
 
+        arch_box = ttk.Label(mainframe, width=30, textvariable=self.archivement_text)
+        arch_box.grid(column=3, row=1, sticky=(N, E))
+
     def _main_click(self):
         """calls more_cookies function and
         updates the text from the _show_cookies label"""
         more_cookies(self.kekse, self.multiplicator)
         self._show_cookies["text"] = "Kekse: {0}".format(str(self.kekse.get()))
 
+        archivements(self.kekse, self.multiplicator, self.archivement_text)
+
     def _upgrades_click(self):
         upgrade(self.kekse, self.upgrades, self.multiplicator, self.info)
-        update()
+        self._update()
 
-    def update(self):
+    def _update(self):
         self._show_cookies["text"] = "Kekse: {0}".format(str(self.kekse.get()))
         self._show_multiplicator["text"] = "Multiplikator: {0}" .format(self.multiplicator.get())
         self.upgrade_button["text"] = "Upgrade price:\n{0}" .format(self.upgrades.get())
